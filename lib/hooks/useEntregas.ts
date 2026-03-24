@@ -12,8 +12,8 @@ import {
   serverTimestamp,
   where,
 } from 'firebase/firestore'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { getDb, getStorageInstance } from '@/lib/firebase/config'
+import { getDb } from '@/lib/firebase/config'
+import { getSupabase, getPublicUrl, BUCKETS } from '@/lib/supabase/client'
 import type { Entrega } from '@/lib/types'
 
 const COLLECTION = 'entregas'
@@ -50,25 +50,17 @@ export function useEntregaByDia(dia: number) {
   })
 }
 
-async function uploadEvidencia(
-  file: File,
-  dia: number,
-  onProgress?: (p: number) => void
-): Promise<string> {
-  const storage = getStorageInstance()
-  const storageRef = ref(storage, `evidencias/dia-${dia}-${Date.now()}.${file.name.split('.').pop()}`)
-  return new Promise((resolve, reject) => {
-    const task = uploadBytesResumable(storageRef, file)
-    task.on(
-      'state_changed',
-      (snap) => onProgress?.((snap.bytesTransferred / snap.totalBytes) * 100),
-      reject,
-      async () => {
-        const url = await getDownloadURL(task.snapshot.ref)
-        resolve(url)
-      }
-    )
-  })
+async function uploadEvidencia(file: File, dia: number): Promise<string> {
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg'
+  const path = `dia-${dia}-${Date.now()}.${ext}`
+
+  const { error } = await getSupabase()
+    .storage
+    .from(BUCKETS.EVIDENCIAS)
+    .upload(path, file, { contentType: file.type, upsert: true })
+
+  if (error) throw new Error(error.message)
+  return getPublicUrl(BUCKETS.EVIDENCIAS, path)
 }
 
 export function useSubmitEntrega() {
@@ -80,20 +72,16 @@ export function useSubmitEntrega() {
       comentario,
       evidenciaFile,
       existingId,
-      onProgress,
     }: {
       dia: number
       reflexion: string
       comentario?: string
       evidenciaFile?: File
       existingId?: string
-      onProgress?: (p: number) => void
+      onProgress?: (p: number) => void  // mantenido por compatibilidad de interfaz
     }) => {
       const db = getDb()
-      let evidenciaUrl = ''
-      if (evidenciaFile) {
-        evidenciaUrl = await uploadEvidencia(evidenciaFile, dia, onProgress)
-      }
+      const evidenciaUrl = evidenciaFile ? await uploadEvidencia(evidenciaFile, dia) : ''
 
       const payload = {
         dia,

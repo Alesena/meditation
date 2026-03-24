@@ -13,13 +13,8 @@ import {
   orderBy,
   serverTimestamp,
 } from 'firebase/firestore'
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage'
-import { getDb, getStorageInstance } from '@/lib/firebase/config'
+import { getDb } from '@/lib/firebase/config'
+import { getSupabase, getPublicUrl, extractPathFromUrl, BUCKETS } from '@/lib/supabase/client'
 import type { Dia, DiaFormData } from '@/lib/types'
 
 const COLLECTION = 'dias'
@@ -50,27 +45,24 @@ export function useDia(id: string | null) {
   })
 }
 
-async function uploadAudio(
-  file: File,
-  diaNum: number,
-  onProgress?: (p: number) => void
-): Promise<string> {
-  const storage = getStorageInstance()
+async function uploadAudio(file: File, diaNum: number): Promise<string> {
   const ext = file.name.split('.').pop()?.toLowerCase() ?? 'mp3'
-  const contentType = file.type || (ext === 'mpeg' || ext === 'mpg' || ext === 'mp3' ? 'audio/mpeg' : `audio/${ext}`)
-  const storageRef = ref(storage, `audios/dia-${diaNum}-${Date.now()}.${ext}`)
-  return new Promise((resolve, reject) => {
-    const task = uploadBytesResumable(storageRef, file, { contentType })
-    task.on(
-      'state_changed',
-      (snap) => onProgress?.((snap.bytesTransferred / snap.totalBytes) * 100),
-      reject,
-      async () => {
-        const url = await getDownloadURL(task.snapshot.ref)
-        resolve(url)
-      }
-    )
-  })
+  const contentType = file.type || ((['mpeg', 'mpg', 'mp3'].includes(ext)) ? 'audio/mpeg' : `audio/${ext}`)
+  const path = `dia-${diaNum}-${Date.now()}.${ext}`
+
+  const { error } = await getSupabase()
+    .storage
+    .from(BUCKETS.AUDIOS)
+    .upload(path, file, { contentType, upsert: true })
+
+  if (error) throw new Error(error.message)
+  return getPublicUrl(BUCKETS.AUDIOS, path)
+}
+
+async function deleteAudio(audioUrl: string) {
+  const path = extractPathFromUrl(audioUrl, BUCKETS.AUDIOS)
+  if (!path) return
+  await getSupabase().storage.from(BUCKETS.AUDIOS).remove([path])
 }
 
 export function useCreateDia() {
@@ -79,17 +71,13 @@ export function useCreateDia() {
     mutationFn: async ({
       data,
       audioFile,
-      onProgress,
     }: {
       data: DiaFormData
       audioFile?: File
-      onProgress?: (p: number) => void
+      onProgress?: (p: number) => void  // mantenido por compatibilidad de interfaz
     }) => {
       const db = getDb()
-      let audioUrl = ''
-      if (audioFile) {
-        audioUrl = await uploadAudio(audioFile, data.dia, onProgress)
-      }
+      const audioUrl = audioFile ? await uploadAudio(audioFile, data.dia) : ''
       await addDoc(collection(db, COLLECTION), {
         ...data,
         audioUrl,
@@ -108,22 +96,18 @@ export function useUpdateDia() {
       data,
       audioFile,
       oldAudioUrl,
-      onProgress,
     }: {
       id: string
       data: Partial<DiaFormData>
       audioFile?: File
       oldAudioUrl?: string
-      onProgress?: (p: number) => void
+      onProgress?: (p: number) => void  // mantenido por compatibilidad de interfaz
     }) => {
       const db = getDb()
-      const storage = getStorageInstance()
       const updates: Record<string, unknown> = { ...data }
       if (audioFile) {
-        if (oldAudioUrl) {
-          try { await deleteObject(ref(storage, oldAudioUrl)) } catch { /* ignore */ }
-        }
-        updates.audioUrl = await uploadAudio(audioFile, data.dia ?? 0, onProgress)
+        if (oldAudioUrl) await deleteAudio(oldAudioUrl)
+        updates.audioUrl = await uploadAudio(audioFile, data.dia ?? 0)
       }
       await updateDoc(doc(db, COLLECTION, id), updates)
     },
@@ -139,10 +123,7 @@ export function useDeleteDia() {
   return useMutation({
     mutationFn: async ({ id, audioUrl }: { id: string; audioUrl?: string }) => {
       const db = getDb()
-      const storage = getStorageInstance()
-      if (audioUrl) {
-        try { await deleteObject(ref(storage, audioUrl)) } catch { /* ignore */ }
-      }
+      if (audioUrl) await deleteAudio(audioUrl)
       await deleteDoc(doc(db, COLLECTION, id))
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['dias'] }),

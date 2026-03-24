@@ -1,6 +1,5 @@
 import { initializeApp, getApps, type FirebaseApp } from 'firebase/app'
 import { getFirestore, type Firestore } from 'firebase/firestore'
-import { getStorage, type FirebaseStorage } from 'firebase/storage'
 import { getAuth, type Auth } from 'firebase/auth'
 
 const firebaseConfig = {
@@ -15,7 +14,6 @@ const firebaseConfig = {
 // Lazy singletons — only initialise on first access (always client-side)
 let _app: FirebaseApp | null = null
 let _db: Firestore | null = null
-let _storage: FirebaseStorage | null = null
 let _auth: Auth | null = null
 
 function app(): FirebaseApp {
@@ -28,11 +26,6 @@ function app(): FirebaseApp {
 export function getDb(): Firestore {
   if (!_db) _db = getFirestore(app())
   return _db
-}
-
-export function getStorageInstance(): FirebaseStorage {
-  if (!_storage) _storage = getStorage(app())
-  return _storage
 }
 
 export function getAuthInstance(): Auth {
