@@ -25,7 +25,7 @@ export function DayGrid({ dias, entregas, activeDia, onSelect }: DayGridProps) {
         </div>
         <div className="h-2.5 w-full rounded-full bg-stone-100">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-sage-400 to-sage-600 transition-all duration-700"
+            className="h-full rounded-full bg-linear-to-r from-sage-400 to-sage-600 transition-all duration-700"
             style={{ width: `${(completedCount / total) * 100}%` }}
           />
         </div>

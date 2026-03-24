@@ -19,7 +19,7 @@ export default function AdminPage() {
   return (
     <div className="min-h-dvh flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-[var(--color-background)]/90 backdrop-blur-md border-b border-sage-100">
+      <header className="sticky top-0 z-30 bg-background/90 backdrop-blur-md border-b border-sage-100">
         <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
@@ -48,7 +48,7 @@ export default function AdminPage() {
         <div className="flex gap-2 border-b border-stone-100 pb-1">
           <button
             onClick={() => setTab('dias')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-t-xl text-sm font-medium transition border-b-2 -mb-[3px]
+            className={`flex items-center gap-2 px-4 py-2 rounded-t-xl text-sm font-medium transition border-b-2 -mb-0.75
               ${tab === 'dias'
                 ? 'border-sage-500 text-sage-600'
                 : 'border-transparent text-stone-600 hover:text-stone-700'}`}
@@ -58,7 +58,7 @@ export default function AdminPage() {
           </button>
           <button
             onClick={() => setTab('entregas')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-t-xl text-sm font-medium transition border-b-2 -mb-[3px]
+            className={`flex items-center gap-2 px-4 py-2 rounded-t-xl text-sm font-medium transition border-b-2 -mb-0.75
               ${tab === 'entregas'
                 ? 'border-sage-500 text-sage-600'
                 : 'border-transparent text-stone-600 hover:text-stone-700'}`}

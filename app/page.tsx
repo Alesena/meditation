@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="min-h-dvh flex flex-col">
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-[var(--color-background)]/80 backdrop-blur-md border-b border-sage-100">
+      <header className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-sage-100">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-xl bg-sage-500 flex items-center justify-center">

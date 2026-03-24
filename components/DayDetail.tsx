@@ -65,6 +65,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
   const isCompleted = entrega?.completado
 
   return (
+    
     <div className="space-y-6">
       {/* Header */}
       <div className="space-y-1">
@@ -74,8 +75,15 @@ export function DayDetail({ dia }: { dia: Dia }) {
           </span>
           {isCompleted && <CheckCircle className="h-4 w-4 text-sage-500" />}
         </div>
-        <h2 className="text-2xl font-bold text-stone-800">{dia.titulo}</h2>
       </div>
+
+       {/* Frase del día */}
+      {dia.fraseDelDia && (
+        <div className="rounded-2xl p-4 bg-linear-to-br from-lavender-100 to-sage-50 border border-lavender-100 flex gap-3">
+          <Quote className="h-5 w-5 text-lavender-400 shrink-0 mt-0.5" />
+          <p className="text-stone-600 italic text-sm leading-relaxed">{dia.fraseDelDia}</p>
+        </div>
+      )}
 
       {/* Audio player */}
       {dia.audioUrl && (
@@ -113,13 +121,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
         <FormattedText text={dia.tarea} className="text-stone-700" />
       </div>
 
-      {/* Frase del día */}
-      {dia.fraseDelDia && (
-        <div className="rounded-2xl p-4 bg-gradient-to-br from-lavender-100 to-sage-50 border border-lavender-100 flex gap-3">
-          <Quote className="h-5 w-5 text-lavender-400 shrink-0 mt-0.5" />
-          <p className="text-stone-600 italic text-sm leading-relaxed">{dia.fraseDelDia}</p>
-        </div>
-      )}
+     
 
       {/* Formulario de entrega */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
