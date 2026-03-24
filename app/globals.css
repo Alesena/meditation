@@ -1,16 +1,21 @@
 @import "tailwindcss";
 
-/* Hace que el prefijo dark: de Tailwind use la clase .dark en lugar del media query */
+/* dark: prefix usa la clase .dark en <html> */
 @variant dark (&:where(.dark, .dark *));
 
 /* =========================================
-   Meditation App — Design Tokens
-   White + Light Green
+   Fuentes — inline porque referencian vars de Next.js
    ========================================= */
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
 
+/* =========================================
+   Colores — SIN inline para que sean CSS variables
+   reales y se puedan sobreescribir en modo oscuro
+   ========================================= */
+@theme {
   /* Verde principal */
   --color-sage-50:  #f0fdf5;
   --color-sage-100: #dcfce9;
@@ -23,7 +28,7 @@
   --color-sage-800: #10532f;
   --color-sage-900: #0e4427;
 
-  /* Verde secundario claro */
+  /* Verde secundario */
   --color-lavender-50:  #f0fdf5;
   --color-lavender-100: #d1fae5;
   --color-lavender-200: #a7f3cf;
@@ -35,7 +40,7 @@
   --color-lavender-800: #0d5443;
   --color-lavender-900: #0b4436;
 
-  /* Neutros limpios */
+  /* Neutros */
   --color-beige-50:  #f8fafb;
   --color-beige-100: #f1f5f7;
   --color-beige-200: #e2eaed;
@@ -47,13 +52,12 @@
   --color-beige-800: #374d55;
   --color-beige-900: #2d4047;
 
-  /* Superficies */
   --color-background: #ffffff;
   --color-foreground: #111827;
 }
 
 /* =========================================
-   Dark mode — activado por clase .dark en <html>
+   Modo oscuro — sobreescribe las CSS variables
    ========================================= */
 html.dark {
   --color-background: #0d1f16;
@@ -66,6 +70,7 @@ html.dark {
   --color-sage-400: #28804f;
   --color-sage-500: #35a865;
   --color-sage-600: #4dc97e;
+  --color-sage-700: #6ee7a0;
 
   --color-lavender-50:  #0d2018;
   --color-lavender-100: #112a1f;
@@ -73,13 +78,13 @@ html.dark {
 
   --color-beige-50:  #111e16;
   --color-beige-100: #172415;
+  --color-beige-200: #1e3020;
 }
 
 /* =========================================
    Base
    ========================================= */
 *, *::before, *::after { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
