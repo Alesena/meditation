@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* =========================================
+   Meditation App — Design Tokens
+   ========================================= */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Sage green palette */
+  --color-sage-50:  #f4f9f6;
+  --color-sage-100: #e6f3eb;
+  --color-sage-200: #c8e6d3;
+  --color-sage-300: #9dd1b1;
+  --color-sage-400: #6ab58a;
+  --color-sage-500: #4a9970;
+  --color-sage-600: #397d5a;
+  --color-sage-700: #2e6347;
+  --color-sage-800: #274f39;
+  --color-sage-900: #21412f;
+
+  /* Lavender palette */
+  --color-lavender-50:  #f5f3fb;
+  --color-lavender-100: #ece8f6;
+  --color-lavender-200: #d8d0ee;
+  --color-lavender-300: #bbaee2;
+  --color-lavender-400: #9b87d2;
+  --color-lavender-500: #7d64c0;
+  --color-lavender-600: #6a4faa;
+  --color-lavender-700: #57408c;
+  --color-lavender-800: #493673;
+  --color-lavender-900: #3d2e5f;
+
+  /* Beige palette */
+  --color-beige-50:  #fdfcf9;
+  --color-beige-100: #faf7f0;
+  --color-beige-200: #f3ecde;
+  --color-beige-300: #e8dcc5;
+  --color-beige-400: #d8c5a3;
+  --color-beige-500: #c3a97e;
+  --color-beige-600: #a88b61;
+  --color-beige-700: #8a6f4a;
+  --color-beige-800: #705a3c;
+  --color-beige-900: #5c4a31;
+
+  /* Background and surface */
+  --color-background: #fdfcf9;
+  --color-foreground: #2d2d2d;
 }
 
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @theme inline {
+    --color-background: #1a1f1c;
+    --color-foreground: #e8ede9;
+    --color-sage-50:  #1e2920;
+    --color-sage-100: #243320;
+    --color-sage-200: #2e4a35;
+    --color-beige-50:  #1f1e1a;
+    --color-beige-100: #252319;
+    --color-lavender-50:  #1d1a2a;
+    --color-lavender-100: #24203a;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Base */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background-color: var(--color-sage-300); border-radius: 9999px; }

@@ -1,0 +1,21 @@
+{
+  "name": "Meditación 23 Días",
+  "short_name": "Meditación",
+  "description": "Tu desafío de meditación de 23 días",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdfcf9",
+  "theme_color": "#4a9970",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
