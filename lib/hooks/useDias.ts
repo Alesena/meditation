@@ -14,7 +14,7 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import { getDb } from '@/lib/firebase/config'
-import { getSupabase, getPublicUrl, extractPathFromUrl, BUCKETS } from '@/lib/supabase/client'
+import { uploadFile, extractPathFromUrl, getSupabase, BUCKET, FOLDERS } from '@/lib/supabase/client'
 import type { Dia, DiaFormData } from '@/lib/types'
 
 const COLLECTION = 'dias'
@@ -47,22 +47,15 @@ export function useDia(id: string | null) {
 
 async function uploadAudio(file: File, diaNum: number): Promise<string> {
   const ext = file.name.split('.').pop()?.toLowerCase() ?? 'mp3'
-  const contentType = file.type || ((['mpeg', 'mpg', 'mp3'].includes(ext)) ? 'audio/mpeg' : `audio/${ext}`)
-  const path = `dia-${diaNum}-${Date.now()}.${ext}`
-
-  const { error } = await getSupabase()
-    .storage
-    .from(BUCKETS.AUDIOS)
-    .upload(path, file, { contentType, upsert: true })
-
-  if (error) throw new Error(error.message)
-  return getPublicUrl(BUCKETS.AUDIOS, path)
+  const contentType = file.type || (['mpeg', 'mpg', 'mp3'].includes(ext) ? 'audio/mpeg' : `audio/${ext}`)
+  const filename = `dia-${diaNum}-${Date.now()}.${ext}`
+  return uploadFile(FOLDERS.AUDIOS, filename, file, contentType)
 }
 
 async function deleteAudio(audioUrl: string) {
-  const path = extractPathFromUrl(audioUrl, BUCKETS.AUDIOS)
+  const path = extractPathFromUrl(audioUrl)
   if (!path) return
-  await getSupabase().storage.from(BUCKETS.AUDIOS).remove([path])
+  await getSupabase().storage.from(BUCKET).remove([path])
 }
 
 export function useCreateDia() {

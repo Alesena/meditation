@@ -13,7 +13,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { getDb } from '@/lib/firebase/config'
-import { getSupabase, getPublicUrl, BUCKETS } from '@/lib/supabase/client'
+import { uploadFile, FOLDERS } from '@/lib/supabase/client'
 import type { Entrega } from '@/lib/types'
 
 const COLLECTION = 'entregas'
@@ -52,15 +52,8 @@ export function useEntregaByDia(dia: number) {
 
 async function uploadEvidencia(file: File, dia: number): Promise<string> {
   const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg'
-  const path = `dia-${dia}-${Date.now()}.${ext}`
-
-  const { error } = await getSupabase()
-    .storage
-    .from(BUCKETS.EVIDENCIAS)
-    .upload(path, file, { contentType: file.type, upsert: true })
-
-  if (error) throw new Error(error.message)
-  return getPublicUrl(BUCKETS.EVIDENCIAS, path)
+  const filename = `dia-${dia}-${Date.now()}.${ext}`
+  return uploadFile(FOLDERS.EVIDENCIAS, filename, file, file.type || 'image/jpeg')
 }
 
 export function useSubmitEntrega() {
