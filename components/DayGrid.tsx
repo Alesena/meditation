@@ -12,7 +12,7 @@ interface DayGridProps {
 
 export function DayGrid({ dias, entregas, activeDia, onSelect }: DayGridProps) {
   const completedDays = new Set(entregas.filter((e) => e.completado).map((e) => e.dia))
-  const total = 23
+  const total = 21
   const completedCount = completedDays.size
 
   return (

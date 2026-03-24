@@ -9,8 +9,8 @@ const geist = Geist({
 })
 
 export const metadata: Metadata = {
-  title: 'Desafío Meditación 23 Días',
-  description: 'Tu viaje de 23 días hacia la paz interior y la consciencia plena',
+  title: 'Desafío Meditación 21 Días',
+  description: 'Tu viaje de 21 días hacia la paz interior y la consciencia plena',
   manifest: '/manifest.json',
 }
 

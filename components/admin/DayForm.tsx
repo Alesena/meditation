@@ -90,7 +90,7 @@ export function DayForm({ dia, onClose }: DayFormProps) {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className={labelClass}>Número de día</label>
-          <input type="number" {...register('dia')} className={inputClass} min={1} max={23} />
+          <input type="number" {...register('dia')} className={inputClass} min={1} max={21} />
           {errors.dia && <p className="text-xs text-red-400 mt-1">{errors.dia.message}</p>}
         </div>
         <div>

@@ -50,7 +50,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-sm font-bold text-stone-800 leading-none">Meditación</h1>
-              <p className="text-[10px] text-stone-600 leading-none">Desafío 23 días</p>
+              <p className="text-[10px] text-stone-600 leading-none">Desafío 21 días</p>
             </div>
           </div>
           <div className="flex items-center gap-1">

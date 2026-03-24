@@ -100,7 +100,7 @@ export default function LoginPage() {
             <Leaf className="h-7 w-7 text-white" />
           </div>
           <h1 className="text-xl font-bold text-stone-800">Panel de administración</h1>
-          <p className="text-sm text-stone-600">Desafío Meditación 23 días</p>
+          <p className="text-sm text-stone-600">Desafío Meditación 21 días</p>
         </div>
 
         {/* Tab toggle */}

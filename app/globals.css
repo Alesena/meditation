@@ -17,43 +17,44 @@
    ========================================= */
 @theme {
   /* Verde principal */
-  --color-sage-50:  #f0fdf5;
-  --color-sage-100: #dcfce9;
-  --color-sage-200: #bbf7d2;
-  --color-sage-300: #86efad;
-  --color-sage-400: #4ade82;
-  --color-sage-500: #22a35a;
-  --color-sage-600: #16864a;
-  --color-sage-700: #126b3b;
-  --color-sage-800: #10532f;
-  --color-sage-900: #0e4427;
+  /* Verde más suave / desaturado */
+  --color-sage-50:  #f2fbf6;
+  --color-sage-100: #e0f5ea;
+  --color-sage-200: #c0ebd4;
+  --color-sage-300: #90d9b0;
+  --color-sage-400: #5ec28a;
+  --color-sage-500: #3daa6e;  /* principal — más suave */
+  --color-sage-600: #2d8a57;
+  --color-sage-700: #246e45;
+  --color-sage-800: #1e5737;
+  --color-sage-900: #19472e;
 
-  /* Verde secundario */
-  --color-lavender-50:  #f0fdf5;
-  --color-lavender-100: #d1fae5;
-  --color-lavender-200: #a7f3cf;
-  --color-lavender-300: #6ee7b0;
-  --color-lavender-400: #34d394;
-  --color-lavender-500: #22a370;
-  --color-lavender-600: #16866b;
-  --color-lavender-700: #0f6855;
-  --color-lavender-800: #0d5443;
-  --color-lavender-900: #0b4436;
+  /* Verde secundario suave */
+  --color-lavender-50:  #f2fbf6;
+  --color-lavender-100: #e0f5ea;
+  --color-lavender-200: #c0ebd4;
+  --color-lavender-300: #90d9b0;
+  --color-lavender-400: #5ec28a;
+  --color-lavender-500: #3daa6e;
+  --color-lavender-600: #2d8a57;
+  --color-lavender-700: #246e45;
+  --color-lavender-800: #1e5737;
+  --color-lavender-900: #19472e;
 
-  /* Neutros */
-  --color-beige-50:  #f8fafb;
-  --color-beige-100: #f1f5f7;
-  --color-beige-200: #e2eaed;
-  --color-beige-300: #c8d6db;
-  --color-beige-400: #9ab4bc;
-  --color-beige-500: #6a909a;
-  --color-beige-600: #537480;
-  --color-beige-700: #435d66;
-  --color-beige-800: #374d55;
-  --color-beige-900: #2d4047;
+  /* Neutros cálidos */
+  --color-beige-50:  #faf9f7;
+  --color-beige-100: #f3f1ee;
+  --color-beige-200: #e6e2db;
+  --color-beige-300: #cec8be;
+  --color-beige-400: #a89e91;
+  --color-beige-500: #857870;
+  --color-beige-600: #6b6059;
+  --color-beige-700: #554c46;
+  --color-beige-800: #443d38;
+  --color-beige-900: #38322d;
 
-  --color-background: #ffffff;
-  --color-foreground: #111827;
+  --color-background: #faf9f6;  /* blanco cremita */
+  --color-foreground: #1a1a18;
 }
 
 /* =========================================
