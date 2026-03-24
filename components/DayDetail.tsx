@@ -82,6 +82,19 @@ export function DayDetail({ dia }: { dia: Dia }) {
         <AudioPlayer src={dia.audioUrl} titulo={dia.titulo} />
       )}
 
+      {/* Video player */}
+      {dia.videoUrl && (
+        <div className="rounded-2xl overflow-hidden border border-sage-100 bg-black">
+          <video
+            src={dia.videoUrl}
+            controls
+            controlsList="nodownload"
+            className="w-full max-h-72 object-contain"
+            preload="metadata"
+          />
+        </div>
+      )}
+
       {/* Description */}
       <div className="bg-beige-50 rounded-2xl p-4 border border-beige-100 space-y-2">
         <div className="flex items-center gap-2 text-stone-600">

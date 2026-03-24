@@ -17,6 +17,7 @@ export const BUCKET = 'meditation'
 
 export const FOLDERS = {
   AUDIOS: 'audios',
+  VIDEOS: 'videos',
   EVIDENCIAS: 'evidencias',
 } as const
 

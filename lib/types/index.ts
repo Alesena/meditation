@@ -5,6 +5,7 @@ export interface Dia {
   dia: number
   titulo: string
   audioUrl: string
+  videoUrl?: string
   descripcion: string
   tarea: string
   fraseDelDia?: string

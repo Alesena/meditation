@@ -65,7 +65,7 @@ export function DayList() {
               <button
                 onClick={async () => {
                   const dia = dias?.find((d) => d.id === confirmDelete)
-                  await deleteDia.mutateAsync({ id: confirmDelete, audioUrl: dia?.audioUrl })
+                  await deleteDia.mutateAsync({ id: confirmDelete, audioUrl: dia?.audioUrl, videoUrl: dia?.videoUrl })
                   setConfirmDelete(null)
                 }}
                 className="flex-1 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition"

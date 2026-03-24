@@ -52,10 +52,17 @@ async function uploadAudio(file: File, diaNum: number): Promise<string> {
   return uploadFile(FOLDERS.AUDIOS, filename, file, contentType)
 }
 
-async function deleteAudio(audioUrl: string) {
-  const path = extractPathFromUrl(audioUrl)
+async function deleteFile(url: string) {
+  const path = extractPathFromUrl(url)
   if (!path) return
   await getSupabase().storage.from(BUCKET).remove([path])
+}
+
+async function uploadVideo(file: File, diaNum: number): Promise<string> {
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'mp4'
+  const contentType = file.type || `video/${ext}`
+  const filename = `dia-${diaNum}-${Date.now()}.${ext}`
+  return uploadFile(FOLDERS.VIDEOS, filename, file, contentType)
 }
 
 export function useCreateDia() {
@@ -64,16 +71,20 @@ export function useCreateDia() {
     mutationFn: async ({
       data,
       audioFile,
+      videoFile,
     }: {
       data: DiaFormData
       audioFile?: File
-      onProgress?: (p: number) => void  // mantenido por compatibilidad de interfaz
+      videoFile?: File
+      onProgress?: (p: number) => void
     }) => {
       const db = getDb()
       const audioUrl = audioFile ? await uploadAudio(audioFile, data.dia) : ''
+      const videoUrl = videoFile ? await uploadVideo(videoFile, data.dia) : ''
       await addDoc(collection(db, COLLECTION), {
         ...data,
         audioUrl,
+        ...(videoUrl && { videoUrl }),
         createdAt: serverTimestamp(),
       })
     },
@@ -88,19 +99,27 @@ export function useUpdateDia() {
       id,
       data,
       audioFile,
+      videoFile,
       oldAudioUrl,
+      oldVideoUrl,
     }: {
       id: string
       data: Partial<DiaFormData>
       audioFile?: File
+      videoFile?: File
       oldAudioUrl?: string
-      onProgress?: (p: number) => void  // mantenido por compatibilidad de interfaz
+      oldVideoUrl?: string
+      onProgress?: (p: number) => void
     }) => {
       const db = getDb()
       const updates: Record<string, unknown> = { ...data }
       if (audioFile) {
-        if (oldAudioUrl) await deleteAudio(oldAudioUrl)
+        if (oldAudioUrl) await deleteFile(oldAudioUrl)
         updates.audioUrl = await uploadAudio(audioFile, data.dia ?? 0)
+      }
+      if (videoFile) {
+        if (oldVideoUrl) await deleteFile(oldVideoUrl)
+        updates.videoUrl = await uploadVideo(videoFile, data.dia ?? 0)
       }
       await updateDoc(doc(db, COLLECTION, id), updates)
     },
@@ -114,9 +133,10 @@ export function useUpdateDia() {
 export function useDeleteDia() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async ({ id, audioUrl }: { id: string; audioUrl?: string }) => {
+    mutationFn: async ({ id, audioUrl, videoUrl }: { id: string; audioUrl?: string; videoUrl?: string }) => {
       const db = getDb()
-      if (audioUrl) await deleteAudio(audioUrl)
+      if (audioUrl) await deleteFile(audioUrl)
+      if (videoUrl) await deleteFile(videoUrl)
       await deleteDoc(doc(db, COLLECTION, id))
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['dias'] }),

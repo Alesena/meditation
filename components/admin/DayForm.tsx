@@ -11,7 +11,7 @@ type DiaFormInput = z.input<typeof diaSchema>
 import { useCreateDia, useUpdateDia } from '@/lib/hooks/useDias'
 import { Spinner } from '@/components/ui/Spinner'
 import type { Dia } from '@/lib/types'
-import { Music, X } from 'lucide-react'
+import { Music, Video, X } from 'lucide-react'
 
 interface DayFormProps {
   dia?: Dia
@@ -22,7 +22,8 @@ export function DayForm({ dia, onClose }: DayFormProps) {
   const createDia = useCreateDia()
   const updateDia = useUpdateDia()
   const [audioFile, setAudioFile] = useState<File | null>(null)
-  const [progress, setProgress] = useState(0)
+  const [videoFile, setVideoFile] = useState<File | null>(null)
+  const [error, setError] = useState('')
 
   const {
     register,
@@ -45,11 +46,15 @@ export function DayForm({ dia, onClose }: DayFormProps) {
     if (files[0]) setAudioFile(files[0])
   }, [])
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const onDropVideo = useCallback((files: File[]) => {
+    if (files[0]) setVideoFile(files[0])
+  }, [])
+
+  const audioDropzone = useDropzone({
     onDrop: onDropAudio,
     accept: {
       'audio/mpeg': ['.mp3', '.mpeg', '.mpg'],
-      'audio/mp4': ['.m4a', '.mp4'],
+      'audio/mp4': ['.m4a'],
       'audio/ogg': ['.ogg', '.oga'],
       'audio/wav': ['.wav'],
       'audio/webm': ['.webm'],
@@ -58,26 +63,39 @@ export function DayForm({ dia, onClose }: DayFormProps) {
     maxFiles: 1,
   })
 
+  const videoDropzone = useDropzone({
+    onDrop: onDropVideo,
+    accept: {
+      'video/mp4': ['.mp4'],
+      'video/webm': ['.webm'],
+      'video/ogg': ['.ogv'],
+      'video/quicktime': ['.mov'],
+    },
+    maxFiles: 1,
+  })
+
   async function onSubmit(values: DiaSchemaType) {
+    setError('')
     try {
       if (dia) {
         await updateDia.mutateAsync({
           id: dia.id,
           data: values,
           audioFile: audioFile ?? undefined,
+          videoFile: videoFile ?? undefined,
           oldAudioUrl: dia.audioUrl,
-          onProgress: setProgress,
+          oldVideoUrl: dia.videoUrl,
         })
       } else {
         await createDia.mutateAsync({
           data: values,
           audioFile: audioFile ?? undefined,
-          onProgress: setProgress,
+          videoFile: videoFile ?? undefined,
         })
       }
       onClose()
     } catch (err) {
-      console.error(err)
+      setError(err instanceof Error ? err.message : 'Error al guardar')
     }
   }
 
@@ -117,42 +135,33 @@ export function DayForm({ dia, onClose }: DayFormProps) {
         <input type="text" {...register('fraseDelDia')} className={inputClass} placeholder="Una frase inspiradora..." />
       </div>
 
-      {/* Audio upload */}
-      <div>
-        <label className={labelClass}>Audio de meditación</label>
-        {audioFile ? (
-          <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-xl border border-sage-200">
-            <Music className="h-5 w-5 text-sage-500 shrink-0" />
-            <span className="text-sm text-stone-600 truncate flex-1">{audioFile.name}</span>
-            <button type="button" onClick={() => setAudioFile(null)}>
-              <X className="h-4 w-4 text-stone-600 hover:text-stone-600" />
-            </button>
-          </div>
-        ) : (
-          <div
-            {...getRootProps()}
-            className={`flex flex-col items-center justify-center gap-2 h-24 rounded-xl border-2 border-dashed cursor-pointer transition-colors
-              ${isDragActive ? 'border-sage-400 bg-sage-50' : 'border-stone-200 hover:border-sage-300'}`}
-          >
-            <input {...getInputProps()} />
-            <Music className="h-5 w-5 text-stone-600" />
-            <p className="text-xs text-stone-600">
-              {dia?.audioUrl ? 'Reemplazar audio (arrastra o selecciona)' : 'Sube el audio de meditación'}
-            </p>
-          </div>
-        )}
-        {dia?.audioUrl && !audioFile && (
-          <p className="text-xs text-stone-600 mt-1">✓ Ya tiene audio. Sube uno nuevo para reemplazarlo.</p>
-        )}
-      </div>
+      {/* Audio */}
+      <FileDropField
+        label="Audio de meditación"
+        icon={<Music className="h-5 w-5 text-stone-600" />}
+        file={audioFile}
+        onClear={() => setAudioFile(null)}
+        existingUrl={dia?.audioUrl}
+        existingLabel="Ya tiene audio"
+        dropzone={audioDropzone}
+        hint="MP3, MPEG, WAV, AAC..."
+      />
 
-      {progress > 0 && progress < 100 && (
-        <div>
-          <div className="h-1.5 bg-stone-100 rounded-full">
-            <div className="h-full bg-sage-400 rounded-full transition-all" style={{ width: `${progress}%` }} />
-          </div>
-          <p className="text-xs text-stone-600 mt-1">Subiendo... {Math.round(progress)}%</p>
-        </div>
+      {/* Video — opcional */}
+      <FileDropField
+        label="Video"
+        optional
+        icon={<Video className="h-5 w-5 text-stone-600" />}
+        file={videoFile}
+        onClear={() => setVideoFile(null)}
+        existingUrl={dia?.videoUrl}
+        existingLabel="Ya tiene video"
+        dropzone={videoDropzone}
+        hint="MP4, WebM, MOV..."
+      />
+
+      {error && (
+        <p className="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2">{error}</p>
       )}
 
       <div className="flex gap-3 pt-2">
@@ -172,5 +181,53 @@ export function DayForm({ dia, onClose }: DayFormProps) {
         </button>
       </div>
     </form>
+  )
+}
+
+/* Subcomponente reutilizable para audio y video */
+function FileDropField({
+  label, optional, icon, file, onClear, existingUrl, existingLabel, dropzone, hint,
+}: {
+  label: string
+  optional?: boolean
+  icon: React.ReactNode
+  file: File | null
+  onClear: () => void
+  existingUrl?: string
+  existingLabel: string
+  dropzone: ReturnType<typeof useDropzone>
+  hint: string
+}) {
+  const { getRootProps, getInputProps, isDragActive } = dropzone
+  return (
+    <div>
+      <label className="block text-sm font-medium text-stone-600 mb-1">
+        {label}{optional && <span className="text-stone-500 font-normal"> (opcional)</span>}
+      </label>
+      {file ? (
+        <div className="flex items-center gap-3 p-3 bg-sage-50 rounded-xl border border-sage-200">
+          {icon}
+          <span className="text-sm text-stone-600 truncate flex-1">{file.name}</span>
+          <button type="button" onClick={onClear}>
+            <X className="h-4 w-4 text-stone-600 hover:text-red-500 transition" />
+          </button>
+        </div>
+      ) : (
+        <div
+          {...getRootProps()}
+          className={`flex flex-col items-center justify-center gap-2 h-20 rounded-xl border-2 border-dashed cursor-pointer transition-colors
+            ${isDragActive ? 'border-sage-400 bg-sage-50' : 'border-stone-200 hover:border-sage-300'}`}
+        >
+          <input {...getInputProps()} />
+          <div className="flex items-center gap-2 text-stone-600">
+            {icon}
+            <p className="text-xs">{hint}</p>
+          </div>
+        </div>
+      )}
+      {existingUrl && !file && (
+        <p className="text-xs text-stone-600 mt-1">✓ {existingLabel}. Sube uno nuevo para reemplazarlo.</p>
+      )}
+    </div>
   )
 }
