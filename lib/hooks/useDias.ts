@@ -56,9 +56,11 @@ async function uploadAudio(
   onProgress?: (p: number) => void
 ): Promise<string> {
   const storage = getStorageInstance()
-  const storageRef = ref(storage, `audios/dia-${diaNum}-${Date.now()}.${file.name.split('.').pop()}`)
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'mp3'
+  const contentType = file.type || (ext === 'mpeg' || ext === 'mpg' || ext === 'mp3' ? 'audio/mpeg' : `audio/${ext}`)
+  const storageRef = ref(storage, `audios/dia-${diaNum}-${Date.now()}.${ext}`)
   return new Promise((resolve, reject) => {
-    const task = uploadBytesResumable(storageRef, file)
+    const task = uploadBytesResumable(storageRef, file, { contentType })
     task.on(
       'state_changed',
       (snap) => onProgress?.((snap.bytesTransferred / snap.totalBytes) * 100),

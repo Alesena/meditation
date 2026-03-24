@@ -39,6 +39,7 @@ export function useAudio(src: string | null) {
 
     const h = new Howl({
       src: [src],
+      format: ['mp3', 'mpeg', 'ogg', 'wav', 'm4a', 'aac', 'webm'],
       html5: true,
       rate,
       loop,

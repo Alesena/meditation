@@ -44,7 +44,14 @@ export function DayForm({ dia, onClose }: DayFormProps) {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDropAudio,
-    accept: { 'audio/*': [] },
+    accept: {
+      'audio/mpeg': ['.mp3', '.mpeg', '.mpg'],
+      'audio/mp4': ['.m4a', '.mp4'],
+      'audio/ogg': ['.ogg', '.oga'],
+      'audio/wav': ['.wav'],
+      'audio/webm': ['.webm'],
+      'audio/aac': ['.aac'],
+    },
     maxFiles: 1,
   })
 
