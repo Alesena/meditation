@@ -102,13 +102,13 @@ export function DayForm({ dia, onClose }: DayFormProps) {
 
       <div>
         <label className={labelClass}>Descripción</label>
-        <textarea {...register('descripcion')} rows={3} className={inputClass} placeholder="Descripción del día..." />
+        <textarea {...register('descripcion')} rows={4} className={`${inputClass} resize-y`} placeholder="Descripción del día..." />
         {errors.descripcion && <p className="text-xs text-red-400 mt-1">{errors.descripcion.message}</p>}
       </div>
 
       <div>
         <label className={labelClass}>Tarea del día</label>
-        <textarea {...register('tarea')} rows={2} className={inputClass} placeholder="La tarea de hoy es..." />
+        <textarea {...register('tarea')} rows={8} className={`${inputClass} resize-y`} placeholder={`La tarea de hoy es...\n\nPuedes usar:\n1. Listas numeradas\n- Viñetas\n**negrita**`} />
         {errors.tarea && <p className="text-xs text-red-400 mt-1">{errors.tarea.message}</p>}
       </div>
 

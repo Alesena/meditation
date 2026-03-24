@@ -12,6 +12,7 @@ import { Spinner } from './ui/Spinner'
 import { getFraseAleatoria } from '@/lib/utils/format'
 import type { Dia } from '@/lib/types'
 import { CheckCircle, BookOpen, Leaf, Quote } from 'lucide-react'
+import { FormattedText } from './ui/FormattedText'
 
 export function DayDetail({ dia }: { dia: Dia }) {
   const { data: entrega, isLoading: loadingEntrega } = useEntregaByDia(dia.dia)
@@ -87,7 +88,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
           <Leaf className="h-4 w-4 text-sage-500" />
           <span className="text-xs font-semibold uppercase tracking-wide">Descripción</span>
         </div>
-        <p className="text-stone-700 leading-relaxed text-sm">{dia.descripcion}</p>
+        <FormattedText text={dia.descripcion} className="text-stone-700" />
       </div>
 
       {/* Tarea */}
@@ -96,7 +97,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
           <BookOpen className="h-4 w-4 text-lavender-500" />
           <span className="text-xs font-semibold uppercase tracking-wide">Tarea del día</span>
         </div>
-        <p className="text-stone-700 leading-relaxed text-sm">{dia.tarea}</p>
+        <FormattedText text={dia.tarea} className="text-stone-700" />
       </div>
 
       {/* Frase del día */}
