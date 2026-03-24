@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const diaSchema = z.object({
-  dia: z.number().min(1).max(23),
+  dia: z.coerce.number().min(1, 'Mínimo día 1').max(23, 'Máximo día 23'),
   titulo: z.string().min(3, 'El título debe tener al menos 3 caracteres'),
   descripcion: z.string().min(10, 'La descripción debe tener al menos 10 caracteres'),
   tarea: z.string().min(5, 'La tarea debe tener al menos 5 caracteres'),

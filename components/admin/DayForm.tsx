@@ -4,7 +4,10 @@ import { useState, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useDropzone } from 'react-dropzone'
+import { z } from 'zod'
 import { diaSchema, type DiaSchemaType } from '@/lib/validations/schemas'
+
+type DiaFormInput = z.input<typeof diaSchema>
 import { useCreateDia, useUpdateDia } from '@/lib/hooks/useDias'
 import { Spinner } from '@/components/ui/Spinner'
 import type { Dia } from '@/lib/types'
@@ -25,8 +28,8 @@ export function DayForm({ dia, onClose }: DayFormProps) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<DiaSchemaType>({
-    resolver: zodResolver(diaSchema) as never,
+  } = useForm<DiaFormInput, unknown, DiaSchemaType>({
+    resolver: zodResolver(diaSchema),
     defaultValues: dia
       ? {
           dia: dia.dia,
@@ -55,20 +58,19 @@ export function DayForm({ dia, onClose }: DayFormProps) {
     maxFiles: 1,
   })
 
-  async function onSubmit(values: unknown) {
-    const v = values as DiaSchemaType
+  async function onSubmit(values: DiaSchemaType) {
     try {
       if (dia) {
         await updateDia.mutateAsync({
           id: dia.id,
-          data: v,
+          data: values,
           audioFile: audioFile ?? undefined,
           oldAudioUrl: dia.audioUrl,
           onProgress: setProgress,
         })
       } else {
         await createDia.mutateAsync({
-          data: v,
+          data: values,
           audioFile: audioFile ?? undefined,
           onProgress: setProgress,
         })
