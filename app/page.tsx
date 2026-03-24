@@ -49,12 +49,12 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-sm font-bold text-stone-800 leading-none">Meditación</h1>
-              <p className="text-[10px] text-stone-400 leading-none">Desafío 23 días</p>
+              <p className="text-[10px] text-stone-600 leading-none">Desafío 23 días</p>
             </div>
           </div>
           <Link
             href="/admin"
-            className="p-2 rounded-xl text-stone-400 hover:text-stone-600 hover:bg-stone-100 transition"
+            className="p-2 rounded-xl text-stone-600 hover:text-stone-600 hover:bg-stone-100 transition"
             title="Administración"
           >
             <Settings className="h-4 w-4" />
@@ -90,7 +90,7 @@ export default function Home() {
                   <div className="h-16 w-16 rounded-2xl bg-sage-100 flex items-center justify-center mx-auto">
                     <Leaf className="h-8 w-8 text-sage-400" />
                   </div>
-                  <p className="text-stone-500 text-sm">
+                  <p className="text-stone-600 text-sm">
                     Aún no hay días cargados.{' '}
                     <Link href="/admin" className="text-sage-600 underline underline-offset-2 font-medium">
                       Ve al panel admin

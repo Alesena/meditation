@@ -19,7 +19,7 @@ export function AudioPlayer({ src, titulo }: { src: string; titulo: string }) {
         <p className="text-sm font-medium text-stone-600 truncate pr-4">{titulo}</p>
         <button
           onClick={toggleLoop}
-          className={`p-1.5 rounded-lg transition-colors ${loop ? 'bg-sage-100 text-sage-600' : 'text-stone-400 hover:text-stone-600'}`}
+          className={`p-1.5 rounded-lg transition-colors ${loop ? 'bg-sage-100 text-sage-600' : 'text-stone-600 hover:text-stone-600'}`}
           title="Loop"
         >
           <Repeat className="h-4 w-4" />
@@ -45,7 +45,7 @@ export function AudioPlayer({ src, titulo }: { src: string; titulo: string }) {
         />
       </div>
 
-      <div className="flex items-center justify-between text-xs text-stone-400">
+      <div className="flex items-center justify-between text-xs text-stone-600">
         <span>{formatTime(seek)}</span>
         <span>{formatTime(duration)}</span>
       </div>
@@ -54,7 +54,7 @@ export function AudioPlayer({ src, titulo }: { src: string; titulo: string }) {
       <div className="flex items-center justify-center gap-4">
         <button
           onClick={stop}
-          className="p-2 rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-100 transition-colors"
+          className="p-2 rounded-full text-stone-600 hover:text-stone-600 hover:bg-stone-100 transition-colors"
           title="Reiniciar"
         >
           <RotateCcw className="h-4 w-4" />
@@ -83,7 +83,7 @@ export function AudioPlayer({ src, titulo }: { src: string; titulo: string }) {
               className={`text-xs px-1.5 py-0.5 rounded transition-colors ${
                 rate === r
                   ? 'bg-sage-500 text-white'
-                  : 'text-stone-400 hover:bg-stone-100'
+                  : 'text-stone-600 hover:bg-stone-100'
               }`}
             >
               {r}x

@@ -84,7 +84,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
 
       {/* Description */}
       <div className="bg-beige-50 rounded-2xl p-4 border border-beige-100 space-y-2">
-        <div className="flex items-center gap-2 text-stone-500">
+        <div className="flex items-center gap-2 text-stone-600">
           <Leaf className="h-4 w-4 text-sage-500" />
           <span className="text-xs font-semibold uppercase tracking-wide">Descripción</span>
         </div>
@@ -93,7 +93,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
 
       {/* Tarea */}
       <div className="bg-lavender-50 rounded-2xl p-4 border border-lavender-100 space-y-2">
-        <div className="flex items-center gap-2 text-stone-500">
+        <div className="flex items-center gap-2 text-stone-600">
           <BookOpen className="h-4 w-4 text-lavender-500" />
           <span className="text-xs font-semibold uppercase tracking-wide">Tarea del día</span>
         </div>
@@ -127,7 +127,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
 
         <div className="space-y-1">
           <label className="text-sm font-medium text-stone-600">
-            Comentario adicional <span className="text-stone-400">(opcional)</span>
+            Comentario adicional <span className="text-stone-600">(opcional)</span>
           </label>
           <input
             {...register('comentario')}
@@ -144,7 +144,7 @@ export function DayDetail({ dia }: { dia: Dia }) {
 
         {uploadProgress > 0 && uploadProgress < 100 && (
           <div className="space-y-1">
-            <div className="flex justify-between text-xs text-stone-400">
+            <div className="flex justify-between text-xs text-stone-600">
               <span>Subiendo...</span>
               <span>{Math.round(uploadProgress)}%</span>
             </div>

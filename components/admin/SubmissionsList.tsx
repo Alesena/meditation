@@ -26,13 +26,13 @@ export function SubmissionsList() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-stone-700">Entregas</h2>
-        <span className="text-sm text-stone-400">
+        <span className="text-sm text-stone-600">
           {entregas?.filter((e) => e.completado).length ?? 0} completadas
         </span>
       </div>
 
       {entregas?.length === 0 && (
-        <p className="text-center text-stone-400 py-8 text-sm">Sin entregas todavía.</p>
+        <p className="text-center text-stone-600 py-8 text-sm">Sin entregas todavía.</p>
       )}
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -61,7 +61,7 @@ export function SubmissionsList() {
               {entrega.reflexion && (
                 <p className="text-xs text-stone-600 line-clamp-3">{entrega.reflexion}</p>
               )}
-              <div className="flex items-center gap-1 text-xs text-stone-400">
+              <div className="flex items-center gap-1 text-xs text-stone-600">
                 <Calendar className="h-3 w-3" />
                 <span>{formatDate(entrega.fechaEntrega as Timestamp)}</span>
               </div>

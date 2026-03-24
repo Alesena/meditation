@@ -34,7 +34,7 @@ export function DayCard({ dia, titulo, completed, active, onClick }: DayCardProp
       <span className={`text-lg font-bold ${active ? 'text-sage-700' : 'text-stone-600'}`}>
         {dia}
       </span>
-      <span className={`text-[10px] mt-1 leading-tight line-clamp-2 ${active ? 'text-sage-600' : 'text-stone-400'}`}>
+      <span className={`text-[10px] mt-1 leading-tight line-clamp-2 ${active ? 'text-sage-600' : 'text-stone-600'}`}>
         {titulo || `Día ${dia}`}
       </span>
     </button>

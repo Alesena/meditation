@@ -54,7 +54,7 @@ export function DayList() {
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center space-y-4">
             <p className="text-stone-700 font-medium">¿Eliminar este día?</p>
-            <p className="text-sm text-stone-500">Se eliminará también el audio de Storage.</p>
+            <p className="text-sm text-stone-600">Se eliminará también el audio de Storage.</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelete(null)}
@@ -80,7 +80,7 @@ export function DayList() {
       {/* List */}
       <div className="space-y-2">
         {dias?.length === 0 && (
-          <p className="text-center text-stone-400 py-8 text-sm">No hay días creados aún.</p>
+          <p className="text-center text-stone-600 py-8 text-sm">No hay días creados aún.</p>
         )}
         {dias?.map((dia) => (
           <div
@@ -92,7 +92,7 @@ export function DayList() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-stone-700 truncate">{dia.titulo}</p>
-              <p className="text-xs text-stone-400 truncate">{dia.descripcion}</p>
+              <p className="text-xs text-stone-600 truncate">{dia.descripcion}</p>
             </div>
             {dia.audioUrl && (
               <Music className="h-4 w-4 text-sage-400 shrink-0" aria-label="Tiene audio" />
@@ -100,14 +100,14 @@ export function DayList() {
             <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
               <button
                 onClick={() => setEditing(dia)}
-                className="p-1.5 rounded-lg text-stone-400 hover:text-sage-600 hover:bg-sage-50 transition"
+                className="p-1.5 rounded-lg text-stone-600 hover:text-sage-600 hover:bg-sage-50 transition"
                 title="Editar"
               >
                 <Pencil className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setConfirmDelete(dia.id)}
-                className="p-1.5 rounded-lg text-stone-400 hover:text-red-500 hover:bg-red-50 transition"
+                className="p-1.5 rounded-lg text-stone-600 hover:text-red-500 hover:bg-red-50 transition"
                 title="Eliminar"
               >
                 <Trash2 className="h-4 w-4" />

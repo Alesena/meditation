@@ -2,65 +2,66 @@
 
 /* =========================================
    Meditation App — Design Tokens
+   White + Light Green
    ========================================= */
 @theme inline {
   /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Sage green palette */
-  --color-sage-50:  #f4f9f6;
-  --color-sage-100: #e6f3eb;
-  --color-sage-200: #c8e6d3;
-  --color-sage-300: #9dd1b1;
-  --color-sage-400: #6ab58a;
-  --color-sage-500: #4a9970;
-  --color-sage-600: #397d5a;
-  --color-sage-700: #2e6347;
-  --color-sage-800: #274f39;
-  --color-sage-900: #21412f;
+  /* Verde principal — calmado, legible sobre blanco */
+  --color-sage-50:  #f0fdf5;
+  --color-sage-100: #dcfce9;
+  --color-sage-200: #bbf7d2;
+  --color-sage-300: #86efad;
+  --color-sage-400: #4ade82;
+  --color-sage-500: #22a35a;  /* acción principal */
+  --color-sage-600: #16864a;
+  --color-sage-700: #126b3b;
+  --color-sage-800: #10532f;
+  --color-sage-900: #0e4427;
 
-  /* Lavender palette */
-  --color-lavender-50:  #f5f3fb;
-  --color-lavender-100: #ece8f6;
-  --color-lavender-200: #d8d0ee;
-  --color-lavender-300: #bbaee2;
-  --color-lavender-400: #9b87d2;
-  --color-lavender-500: #7d64c0;
-  --color-lavender-600: #6a4faa;
-  --color-lavender-700: #57408c;
-  --color-lavender-800: #493673;
-  --color-lavender-900: #3d2e5f;
+  /* Verde secundario claro — reemplaza lavender */
+  --color-lavender-50:  #f0fdf5;
+  --color-lavender-100: #d1fae5;
+  --color-lavender-200: #a7f3cf;
+  --color-lavender-300: #6ee7b0;
+  --color-lavender-400: #34d394;
+  --color-lavender-500: #22a370;
+  --color-lavender-600: #16866b;
+  --color-lavender-700: #0f6855;
+  --color-lavender-800: #0d5443;
+  --color-lavender-900: #0b4436;
 
-  /* Beige palette */
-  --color-beige-50:  #fdfcf9;
-  --color-beige-100: #faf7f0;
-  --color-beige-200: #f3ecde;
-  --color-beige-300: #e8dcc5;
-  --color-beige-400: #d8c5a3;
-  --color-beige-500: #c3a97e;
-  --color-beige-600: #a88b61;
-  --color-beige-700: #8a6f4a;
-  --color-beige-800: #705a3c;
-  --color-beige-900: #5c4a31;
+  /* Neutros limpios — reemplaza beige */
+  --color-beige-50:  #f8fafb;
+  --color-beige-100: #f1f5f7;
+  --color-beige-200: #e2eaed;
+  --color-beige-300: #c8d6db;
+  --color-beige-400: #9ab4bc;
+  --color-beige-500: #6a909a;
+  --color-beige-600: #537480;
+  --color-beige-700: #435d66;
+  --color-beige-800: #374d55;
+  --color-beige-900: #2d4047;
 
-  /* Background and surface */
-  --color-background: #fdfcf9;
-  --color-foreground: #2d2d2d;
+  /* Fondo blanco, texto oscuro para máxima legibilidad */
+  --color-background: #ffffff;
+  --color-foreground: #111827;
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
   @theme inline {
-    --color-background: #1a1f1c;
-    --color-foreground: #e8ede9;
-    --color-sage-50:  #1e2920;
-    --color-sage-100: #243320;
-    --color-sage-200: #2e4a35;
-    --color-beige-50:  #1f1e1a;
-    --color-beige-100: #252319;
-    --color-lavender-50:  #1d1a2a;
-    --color-lavender-100: #24203a;
+    --color-background: #0f1a14;
+    --color-foreground: #e8f5ee;
+    --color-sage-50:  #0d2018;
+    --color-sage-100: #112a1f;
+    --color-sage-200: #163d2c;
+    --color-lavender-50:  #0d2018;
+    --color-lavender-100: #112a1f;
+    --color-beige-50:  #111a14;
+    --color-beige-100: #16221a;
   }
 }
 

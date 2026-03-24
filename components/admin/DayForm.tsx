@@ -113,7 +113,7 @@ export function DayForm({ dia, onClose }: DayFormProps) {
       </div>
 
       <div>
-        <label className={labelClass}>Frase del día <span className="text-stone-400">(opcional)</span></label>
+        <label className={labelClass}>Frase del día <span className="text-stone-600">(opcional)</span></label>
         <input type="text" {...register('fraseDelDia')} className={inputClass} placeholder="Una frase inspiradora..." />
       </div>
 
@@ -125,7 +125,7 @@ export function DayForm({ dia, onClose }: DayFormProps) {
             <Music className="h-5 w-5 text-sage-500 shrink-0" />
             <span className="text-sm text-stone-600 truncate flex-1">{audioFile.name}</span>
             <button type="button" onClick={() => setAudioFile(null)}>
-              <X className="h-4 w-4 text-stone-400 hover:text-stone-600" />
+              <X className="h-4 w-4 text-stone-600 hover:text-stone-600" />
             </button>
           </div>
         ) : (
@@ -135,14 +135,14 @@ export function DayForm({ dia, onClose }: DayFormProps) {
               ${isDragActive ? 'border-sage-400 bg-sage-50' : 'border-stone-200 hover:border-sage-300'}`}
           >
             <input {...getInputProps()} />
-            <Music className="h-5 w-5 text-stone-400" />
-            <p className="text-xs text-stone-400">
+            <Music className="h-5 w-5 text-stone-600" />
+            <p className="text-xs text-stone-600">
               {dia?.audioUrl ? 'Reemplazar audio (arrastra o selecciona)' : 'Sube el audio de meditación'}
             </p>
           </div>
         )}
         {dia?.audioUrl && !audioFile && (
-          <p className="text-xs text-stone-400 mt-1">✓ Ya tiene audio. Sube uno nuevo para reemplazarlo.</p>
+          <p className="text-xs text-stone-600 mt-1">✓ Ya tiene audio. Sube uno nuevo para reemplazarlo.</p>
         )}
       </div>
 
@@ -151,7 +151,7 @@ export function DayForm({ dia, onClose }: DayFormProps) {
           <div className="h-1.5 bg-stone-100 rounded-full">
             <div className="h-full bg-sage-400 rounded-full transition-all" style={{ width: `${progress}%` }} />
           </div>
-          <p className="text-xs text-stone-400 mt-1">Subiendo... {Math.round(progress)}%</p>
+          <p className="text-xs text-stone-600 mt-1">Subiendo... {Math.round(progress)}%</p>
         </div>
       )}
 

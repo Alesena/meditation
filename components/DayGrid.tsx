@@ -19,7 +19,7 @@ export function DayGrid({ dias, entregas, activeDia, onSelect }: DayGridProps) {
     <div className="space-y-4">
       {/* Progress bar */}
       <div className="space-y-1">
-        <div className="flex justify-between text-sm text-stone-500">
+        <div className="flex justify-between text-sm text-stone-600">
           <span>Progreso del desafío</span>
           <span className="font-medium text-sage-600">{completedCount} / {total} días</span>
         </div>

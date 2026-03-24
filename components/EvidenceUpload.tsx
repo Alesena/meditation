@@ -61,8 +61,8 @@ export function EvidenceUpload({ onFileSelect, existingUrl }: EvidenceUploadProp
             ${isDragActive ? 'border-sage-400 bg-sage-50' : 'border-stone-200 hover:border-sage-300 hover:bg-stone-50'}`}
         >
           <input {...getInputProps()} />
-          <Upload className="h-6 w-6 text-stone-400" />
-          <p className="text-sm text-stone-400 text-center">
+          <Upload className="h-6 w-6 text-stone-600" />
+          <p className="text-sm text-stone-600 text-center">
             {isDragActive ? 'Suelta la imagen aquí' : 'Arrastra una foto o toca para seleccionar'}
           </p>
         </div>

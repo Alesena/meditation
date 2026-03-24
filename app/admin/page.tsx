@@ -29,10 +29,10 @@ export default function AdminPage() {
             </Link>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-stone-400 hidden sm:block">{user?.email}</span>
+            <span className="text-xs text-stone-600 hidden sm:block">{user?.email}</span>
             <button
               onClick={signOut}
-              className="flex items-center gap-1.5 text-xs text-stone-500 hover:text-red-500 transition"
+              className="flex items-center gap-1.5 text-xs text-stone-600 hover:text-red-500 transition"
             >
               <LogOut className="h-3.5 w-3.5" />
               Salir
@@ -49,7 +49,7 @@ export default function AdminPage() {
             className={`flex items-center gap-2 px-4 py-2 rounded-t-xl text-sm font-medium transition border-b-2 -mb-[3px]
               ${tab === 'dias'
                 ? 'border-sage-500 text-sage-600'
-                : 'border-transparent text-stone-500 hover:text-stone-700'}`}
+                : 'border-transparent text-stone-600 hover:text-stone-700'}`}
           >
             <LayoutGrid className="h-4 w-4" />
             Días
@@ -59,7 +59,7 @@ export default function AdminPage() {
             className={`flex items-center gap-2 px-4 py-2 rounded-t-xl text-sm font-medium transition border-b-2 -mb-[3px]
               ${tab === 'entregas'
                 ? 'border-sage-500 text-sage-600'
-                : 'border-transparent text-stone-500 hover:text-stone-700'}`}
+                : 'border-transparent text-stone-600 hover:text-stone-700'}`}
           >
             <BookOpen className="h-4 w-4" />
             Entregas
