@@ -37,7 +37,8 @@ export function extractPathFromUrl(url: string): string | null {
 }
 
 /**
- * Sube un archivo al bucket. Si el bucket no existe lo crea automáticamente.
+ * Sube un archivo al bucket 'meditation'.
+ * El bucket debe existir previamente en Supabase Dashboard → Storage.
  */
 export async function uploadFile(
   folder: string,
@@ -45,28 +46,21 @@ export async function uploadFile(
   file: File,
   contentType: string
 ): Promise<string> {
-  const supabase = getSupabase()
   const path = `${folder}/${filename}`
 
-  let { error } = await supabase.storage
+  const { error } = await getSupabase()
+    .storage
     .from(BUCKET)
     .upload(path, file, { contentType, upsert: true })
 
-  // Si el bucket no existe, lo creamos e intentamos de nuevo
-  if (error?.message === 'Bucket not found') {
-    const { error: createError } = await supabase.storage.createBucket(BUCKET, {
-      public: true,
-      allowedMimeTypes: ['audio/*', 'image/*'],
-    })
-    if (createError && createError.message !== 'Bucket already exists') {
-      throw new Error(`No se pudo crear el bucket: ${createError.message}`)
+  if (error) {
+    if (error.message === 'Bucket not found') {
+      throw new Error(
+        'El bucket "meditation" no existe. Créalo en Supabase Dashboard → Storage → New bucket (nombre: meditation, público: sí).'
+      )
     }
-    const retry = await supabase.storage
-      .from(BUCKET)
-      .upload(path, file, { contentType, upsert: true })
-    error = retry.error
+    throw new Error(error.message)
   }
 
-  if (error) throw new Error(error.message)
   return getPublicUrl(path)
 }
