@@ -8,6 +8,7 @@ import { DayList } from '@/components/admin/DayList'
 import { SubmissionsList } from '@/components/admin/SubmissionsList'
 import { Leaf, LogOut, LayoutGrid, BookOpen } from 'lucide-react'
 import Link from 'next/link'
+import { DarkModeToggle } from '@/components/ui/DarkModeToggle'
 
 type Tab = 'dias' | 'entregas'
 
@@ -28,11 +29,12 @@ export default function AdminPage() {
               <span className="text-sm font-bold text-stone-700">Admin</span>
             </Link>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <span className="text-xs text-stone-600 hidden sm:block">{user?.email}</span>
+            <DarkModeToggle />
             <button
               onClick={signOut}
-              className="flex items-center gap-1.5 text-xs text-stone-600 hover:text-red-500 transition"
+              className="flex items-center gap-1.5 text-xs text-stone-600 hover:text-red-500 dark:text-stone-400 transition"
             >
               <LogOut className="h-3.5 w-3.5" />
               Salir

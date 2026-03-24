@@ -11,6 +11,7 @@ import { Spinner } from '@/components/ui/Spinner'
 import type { Dia } from '@/lib/types'
 import { Leaf, Settings } from 'lucide-react'
 import Link from 'next/link'
+import { DarkModeToggle } from '@/components/ui/DarkModeToggle'
 
 const LAST_DAY_KEY = 'meditation-last-day'
 
@@ -52,13 +53,16 @@ export default function Home() {
               <p className="text-[10px] text-stone-600 leading-none">Desafío 23 días</p>
             </div>
           </div>
-          <Link
-            href="/admin"
-            className="p-2 rounded-xl text-stone-600 hover:text-stone-600 hover:bg-stone-100 transition"
-            title="Administración"
-          >
-            <Settings className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-1">
+            <DarkModeToggle />
+            <Link
+              href="/admin"
+              className="h-9 w-9 flex items-center justify-center rounded-xl text-stone-600 hover:bg-stone-100 dark:text-stone-400 dark:hover:bg-stone-800 transition"
+              title="Administración"
+            >
+              <Settings className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </header>
 

@@ -1,27 +1,29 @@
 @import "tailwindcss";
 
+/* Hace que el prefijo dark: de Tailwind use la clase .dark en lugar del media query */
+@variant dark (&:where(.dark, .dark *));
+
 /* =========================================
    Meditation App — Design Tokens
    White + Light Green
    ========================================= */
 @theme inline {
-  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  /* Verde principal — calmado, legible sobre blanco */
+  /* Verde principal */
   --color-sage-50:  #f0fdf5;
   --color-sage-100: #dcfce9;
   --color-sage-200: #bbf7d2;
   --color-sage-300: #86efad;
   --color-sage-400: #4ade82;
-  --color-sage-500: #22a35a;  /* acción principal */
+  --color-sage-500: #22a35a;
   --color-sage-600: #16864a;
   --color-sage-700: #126b3b;
   --color-sage-800: #10532f;
   --color-sage-900: #0e4427;
 
-  /* Verde secundario claro — reemplaza lavender */
+  /* Verde secundario claro */
   --color-lavender-50:  #f0fdf5;
   --color-lavender-100: #d1fae5;
   --color-lavender-200: #a7f3cf;
@@ -33,7 +35,7 @@
   --color-lavender-800: #0d5443;
   --color-lavender-900: #0b4436;
 
-  /* Neutros limpios — reemplaza beige */
+  /* Neutros limpios */
   --color-beige-50:  #f8fafb;
   --color-beige-100: #f1f5f7;
   --color-beige-200: #e2eaed;
@@ -45,34 +47,40 @@
   --color-beige-800: #374d55;
   --color-beige-900: #2d4047;
 
-  /* Fondo blanco, texto oscuro para máxima legibilidad */
+  /* Superficies */
   --color-background: #ffffff;
   --color-foreground: #111827;
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  @theme inline {
-    --color-background: #0f1a14;
-    --color-foreground: #e8f5ee;
-    --color-sage-50:  #0d2018;
-    --color-sage-100: #112a1f;
-    --color-sage-200: #163d2c;
-    --color-lavender-50:  #0d2018;
-    --color-lavender-100: #112a1f;
-    --color-beige-50:  #111a14;
-    --color-beige-100: #16221a;
-  }
+/* =========================================
+   Dark mode — activado por clase .dark en <html>
+   ========================================= */
+html.dark {
+  --color-background: #0d1f16;
+  --color-foreground: #e2f0e8;
+
+  --color-sage-50:  #0d2018;
+  --color-sage-100: #112a1f;
+  --color-sage-200: #163d2c;
+  --color-sage-300: #1e5c3f;
+  --color-sage-400: #28804f;
+  --color-sage-500: #35a865;
+  --color-sage-600: #4dc97e;
+
+  --color-lavender-50:  #0d2018;
+  --color-lavender-100: #112a1f;
+  --color-lavender-200: #163d2c;
+
+  --color-beige-50:  #111e16;
+  --color-beige-100: #172415;
 }
 
-/* Base */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+/* =========================================
+   Base
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background-color: var(--color-background);
@@ -80,9 +88,9 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background-color: var(--color-sage-300); border-radius: 9999px; }
