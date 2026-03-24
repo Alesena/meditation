@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import {
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   type User,
@@ -26,9 +27,13 @@ export function useAuth() {
     return signInWithEmailAndPassword(getAuthInstance(), email, password)
   }
 
+  async function register(email: string, password: string) {
+    return createUserWithEmailAndPassword(getAuthInstance(), email, password)
+  }
+
   async function signOut() {
     return firebaseSignOut(getAuthInstance())
   }
 
-  return { user, loading, signIn, signOut }
+  return { user, loading, signIn, register, signOut }
 }
